@@ -2648,6 +2648,13 @@ Message
 .. autoclass:: Message()
     :members:
 
+DeletedReferencedMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: DeletedReferencedMessage()
+    :members:
+
+
 Reaction
 ~~~~~~~~~
 
@@ -2731,6 +2738,12 @@ Role
 ~~~~~
 
 .. autoclass:: Role()
+    :members:
+
+RoleTags
+~~~~~~~~~~
+
+.. autoclass:: RoleTags()
     :members:
 
 TextChannel
@@ -2838,11 +2851,6 @@ Sticker
 .. autoclass:: Sticker()
     :members:
 
-MessageReference
-~~~~~~~~~~~~~~~~~
-.. autoclass:: MessageReference()
-    :members:
-
 RawMessageDeleteEvent
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2913,6 +2921,12 @@ AllowedMentions
 ~~~~~~~~~~~~~~~~~
 
 .. autoclass:: AllowedMentions
+    :members:
+
+MessageReference
+~~~~~~~~~~~~~~~~~
+
+.. autoclass:: MessageReference
     :members:
 
 Intents

@@ -30,14 +30,13 @@ from collections import namedtuple
 from . import utils
 from .role import Role
 from .member import Member, VoiceState
-from .activity import create_activity
 from .emoji import Emoji
 from .errors import InvalidData
 from .permissions import PermissionOverwrite
 from .colour import Colour
 from .errors import InvalidArgument, ClientException
 from .channel import *
-from .enums import VoiceRegion, Status, ChannelType, try_enum, VerificationLevel, ContentFilter, NotificationLevel
+from .enums import VoiceRegion, ChannelType, try_enum, VerificationLevel, ContentFilter, NotificationLevel
 from .mixins import Hashable
 from .user import User
 from .invite import Invite
@@ -563,6 +562,30 @@ class Guild(Hashable):
     def default_role(self):
         """:class:`Role`: Gets the @everyone role that all members have by default."""
         return self.get_role(self.id)
+
+    @property
+    def premium_subscriber_role(self):
+        """Optional[:class:`Role`]: Gets the premium subscriber role, AKA "boost" role, in this guild.
+
+        .. versionadded:: 1.6
+        """
+        for role in self._roles.values():
+            if role.is_premium_subscriber():
+                return role
+        return None
+
+    @property
+    def self_role(self):
+        """Optional[:class:`Role`]: Gets the role associated with this client's user, if any.
+
+        .. versionadded:: 1.6
+        """
+        self_id = self._state.self_id
+        for role in self._roles.values():
+            tags = role.tags
+            if tags and tags.bot_id == self_id:
+                return role
+        return None
 
     @property
     def owner(self):
@@ -1192,10 +1215,10 @@ class Guild(Hashable):
         except KeyError:
             pass
         else:
-            if rules_channel is None:
-                fields['public_updates_channel_id'] = rules_channel
+            if public_updates_channel is None:
+                fields['public_updates_channel_id'] = public_updates_channel
             else:
-                fields['public_updates_channel_id'] = rules_channel.id
+                fields['public_updates_channel_id'] = public_updates_channel.id
         await http.edit_guild(self.id, reason=reason, **fields)
 
     async def fetch_channels(self):
