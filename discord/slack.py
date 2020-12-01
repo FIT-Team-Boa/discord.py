@@ -1,6 +1,6 @@
 from .http import Route
 from .client import Client
-from .slackhttp import HTTPClient
+from .slack_http import HTTPClient
 
 class SlackRoute(Route):
     """ This is a custom route class to allow connection to slack API rather than discord API
